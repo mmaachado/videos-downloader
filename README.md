@@ -8,7 +8,6 @@
 
 <p align="center">
   • <a href="#-installation">Installation</a>
-  • <a href="#-usage">Usage</a>
 </p>
 
 <p align="center">
@@ -16,7 +15,6 @@ Scrap urls and id's from vimeo and download videos
 </p>
 
 - [📲 Installation](#-installation)
-- [🐍 Usage](#-usage)
 - [👨🏻‍💻 Author](#-author)
 - [👮🏻 License](#-license)
 
