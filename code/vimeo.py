@@ -1,51 +1,32 @@
 from vimeo_downloader import Vimeo
-import pandas as pd
 import logging
 import os
 
-logging.basicConfig(level=logging.DEBUG, format=('%(asctime)s - %(levelname)s - %(message)s'), filename='../config/vimeo-logfile.log')
+logging.basicConfig(level=logging.DEBUG, format=(
+    '%(asctime)s - %(levelname)s - %(message)s'), filename='../config/vimeo-logfile.log')
 
-"""
-In the urls.txt you get two columns: 
-URL -> The website that is hosting the video.
-VIMEO_ID -> The vimeo unique identifier for the video, you can get it by clicking in 'Share' or get it in the HTML of the website.
+# Actual module
+module = 1
+# Download path
+path = os.makedirs(f'../data/Modulo {module}', exist_ok=True)
 
-Paste as many links you want.
-"""
-def vimeo_download():
-    df = pd.read_csv('../urls.txt', delimiter=',')
+# Chrome cookies for login, how to extract: https://pypi.org/project/vimeo-downloader/
+cookies = """ """.strip()
 
-    # If you want to create folders for more than one module
+# List of vimeo id's for download
+videos = []
 
-    module = 1
-    path = os.makedirs(f'../data/Module {module}', exist_ok=True)
+# Attribute to adjust number of videos title
+video_num = 1
+# Here is the loop that will download each id pasted
+for video in videos:
+    vimeo = Vimeo(url=video, cookies=cookies)
+    best_stream = vimeo.best_stream
+    title = best_stream.title
+    title = f'{video_num} {title}'
 
-    # For more than one video, use this counter
-    video_num = 1
+    logging.info(f'Downloading"{title}')
+    best_stream.download(
+        download_directory=f'../data/Modulo {module}/', filename=title)
 
-    # Here is the loop that will download each link you pasted
-    for row in df.to_dict():
-        # Identify the website url
-        extracted_url = row['URL']
-        # Identify the vimeo unique id
-        extracted_id = row['VIMEO_ID']
-        """
-        Strip the url to get only the video title
-        e.g. https://vimeo/123456-my-first-class
-        Will be: 123456 my first class
-        """
-        raw_title = extracted_url[69:].replace('-', ' ')
-        # Remove the digits so we got only my first class
-        title = ''.join([i for i in raw_title if not i.isdigit()])
-        # Some cases the string comes with withespace in the first character, so I just strip the string and capitalize it
-        title = title.strip().capitalize()
-
-        # Here we parse the vimeo id and tells the program that it comes from and embed url, for more details check the vimeo-downloader lib documentation
-        vimeo = Vimeo(f'{extracted_id}', embedded_on=f'{extracted_url}')
-        # [-1] Downloads the best quality video, check lib documentation for more info
-        vimeo.streams[-1].download(download_directory=path, filename=title)
-
-        # Each time it saves a file, it will increase this title number
-        video_num += 1
-
-vimeo_download()
+    video_num += 1
