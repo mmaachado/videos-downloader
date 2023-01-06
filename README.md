@@ -23,7 +23,7 @@ Scrap urls and id's from vimeo and download videos
 ## 📲 Installation
 
 ```shell
-git clone https://github.com/mmaachado/vimeo-downloader.git
+git clone https://github.com/mmaachado/videos-downloader.git
 ```
 >Clone the repo in your machine...
 
