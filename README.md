@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-Scrap urls and id's from vimeo and download videos
+Scrap urls and id's from vimeo or youtube and download videos
 </p>
 
 - [📲 Installation](#-installation)
