@@ -3,22 +3,34 @@ import pandas as pd
 import logging
 import os
 
-logging.basicConfig(level=logging.DEBUG, format=('%(asctime)s - %(levelname)s - %(message)s'), filename='../config/vimeo-logfile.log')
+logging.basicConfig(level=logging.DEBUG, format=(
+    '%(asctime)s - %(levelname)s - %(message)s'), filename='../config/vimeo-logfile.log')
 
 """
+Use this method if the standard didn't work.
+
 In the urls.txt you get two columns: 
 URL -> The website that is hosting the video.
 VIMEO_ID -> The vimeo unique identifier for the video, you can get it by clicking in 'Share' or get it in the HTML of the website.
 
 Paste as many links you want.
 """
-def vimeo_download():
-    df = pd.read_csv('../urls.txt', delimiter=',')
+
+
+def vimeo_embed_download(module: int) -> int:
+    """
+    Download embedded vimeo videos extracted from vimeo-urls.txt file.
+
+    :param module: (Optional) Number of module.
+
+    :return: int
+    """
+    df = pd.read_csv('/vimeo-urls.txt', delimiter=',')
 
     # If you want to create folders for more than one module
 
-    module = 1
-    path = os.makedirs(f'../data/Module {module}', exist_ok=True)
+    module = module
+    path = os.makedirs(f'/data/Modulo {module}', exist_ok=True)
 
     # For more than one video, use this counter
     video_num = 1
@@ -47,5 +59,3 @@ def vimeo_download():
 
         # Each time it saves a file, it will increase this title number
         video_num += 1
-
-vimeo_download()
