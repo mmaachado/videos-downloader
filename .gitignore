@@ -1,7 +1,6 @@
 venv
+env
 __pycache__
-*.mp4
-*.zip
-*.DS_STORE
 *.ipynb
 *.log
+data
